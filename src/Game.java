@@ -24,12 +24,16 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public BufferedImage layer = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 
-    public Player player;
+    public static Player player;
+    public static Enemy enemy;
+    public static Ball ball;
 
     public Game() {
         this.setPreferredSize(new Dimension(WIDTH * SCALE, HEIGHT * SCALE));
         this.addKeyListener(this);
-        player = new Player(100, HEIGHT - 5, 2);
+        player = new Player(100, HEIGHT - 5, 4);
+        enemy = new Enemy(100, -5, 2);
+        ball = new Ball(100, HEIGHT / 2 - 1, 2.5);
     }
 
     public static void main(final String[] args) {
@@ -47,6 +51,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     public void tick() {
         player.tick();
+        enemy.tick();
+        ball.tick();
     }
 
     public void render() {
@@ -59,6 +65,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         player.render(g);
+        enemy.render(g);
+        ball.render(g);
         g = bs.getDrawGraphics();
         g.drawImage(layer, 0, 0, WIDTH * SCALE, HEIGHT * SCALE, null);
         bs.show();
@@ -81,7 +89,6 @@ public class Game extends Canvas implements Runnable, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
 
     }
 
